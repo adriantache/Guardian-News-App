@@ -3,7 +3,6 @@ package com.adriantache.guardiannewsapp;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +40,5 @@ public class MainActivity extends AppCompatActivity {
 
             GUARDIAN_API_KEY = sb.toString();
         }
-
-        Log.i("XXX", "readAPIKey: " + GUARDIAN_API_KEY);
     }
 }
