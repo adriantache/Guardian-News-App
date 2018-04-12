@@ -1,4 +1,4 @@
-package com.adriantache.guardiannewsapp;
+package com.adriantache.guardiannewsapp.customClasses;
 
 import android.graphics.Bitmap;
 

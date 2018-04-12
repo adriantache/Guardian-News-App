@@ -1,9 +1,9 @@
 package com.adriantache.guardiannewsapp.loader;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.support.v4.content.AsyncTaskLoader;
 
-import com.adriantache.guardiannewsapp.NewsItem;
+import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 import com.adriantache.guardiannewsapp.util.Utils;
 
 import java.util.ArrayList;

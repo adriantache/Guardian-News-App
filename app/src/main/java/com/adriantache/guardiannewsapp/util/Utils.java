@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
-import com.adriantache.guardiannewsapp.NewsItem;
+import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
