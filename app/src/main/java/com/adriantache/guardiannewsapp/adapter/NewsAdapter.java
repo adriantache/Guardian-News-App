@@ -40,7 +40,11 @@ public class NewsAdapter extends ArrayAdapter<NewsItem> {
         NewsItem newsItem = getItem(position);
 
         if (newsItem != null) {
-            holder.thumbnail.setImageBitmap(newsItem.getThumbnail());
+            if (newsItem.getThumbnail() != null)
+                holder.thumbnail.setImageBitmap(newsItem.getThumbnail());
+            else
+                holder.thumbnail.setImageResource(R.drawable.powered_by_guardian);
+
             holder.category.setText(newsItem.getCategory());
             holder.title.setText(newsItem.getTitle());
             holder.date.setText(newsItem.getDate());
