@@ -1,14 +1,20 @@
 package com.adriantache.guardiannewsapp;
 
+import android.content.AsyncTaskLoader;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.ListView;
 
+import com.adriantache.guardiannewsapp.util.Utils;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         //find views
         listView = findViewById(R.id.listView);
+
+        //todo start Loader to fetch news and populate ListView
+
     }
 
     private String readAPIKey() {
@@ -67,5 +76,9 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    //todo write code to bind custom adapter to list using results from loader
+    private void setAdapter(List<NewsItem> newsList){
+
+    }
 
 }
