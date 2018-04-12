@@ -1,7 +1,10 @@
 package com.adriantache.guardiannewsapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>> {
 
     private ListView listView;
+    private TextView errorText;
     private String GUARDIAN_URL;
 
     @Override
@@ -55,9 +59,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //find views
         listView = findViewById(R.id.listView);
+        errorText = findViewById(R.id.errorText);
 
-        //start Loader to fetch news and populate ListView
-        getSupportLoaderManager().initLoader(0, null, this);
+        listView.setEmptyView(errorText);
+
+        //test network connectivity
+        ConnectivityManager cm = (ConnectivityManager)
+                getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting()) {
+            //start Loader to fetch news and populate ListView
+            getSupportLoaderManager().initLoader(0, null, this);
+        } else {
+            hideProgressBar();
+            errorText.setText(R.string.no_internet);
+            return;
+        }
 
         //set list view onClick
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -124,8 +142,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(@NonNull Loader<List<NewsItem>> loader, List<NewsItem> data) {
         if (data != null) setAdapter(data);
         else {
-            TextView textView = findViewById(R.id.errorText);
-            textView.setText(R.string.no_news);
+            errorText.setText(R.string.no_news);
         }
     }
 

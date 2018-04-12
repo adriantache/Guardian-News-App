@@ -3,4 +3,5 @@
     <string name="guardian_logo">Guardian logo</string>
     <string name="thumbnail">Thumbnail</string>
     <string name="no_news">No news items found.</string>
+    <string name="no_internet">Check your internet connection.</string>
 </resources>
