@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         //then create Guardian URL
         GUARDIAN_URL =
                 "http://content.guardianapis.com/search?order-by=newest&tag=technology%2Fandroid" +
-                        "&section=technology&page-size=100&api-key=" + GUARDIAN_API_KEY;
+                        "&section=technology&page-size=100&show-fields=thumbnail&api-key=" +
+                        GUARDIAN_API_KEY;
 
         //find views
         listView = findViewById(R.id.listView);
