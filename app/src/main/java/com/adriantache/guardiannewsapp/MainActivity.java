@@ -1,6 +1,8 @@
 package com.adriantache.guardiannewsapp;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -54,7 +57,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         listView = findViewById(R.id.listView);
 
         //start Loader to fetch news and populate ListView
-        getSupportLoaderManager().initLoader(0,null,this);
+        getSupportLoaderManager().initLoader(0, null, this);
+
+        //set list view onClick
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewsItem newsItem = (NewsItem) parent.getItemAtPosition(position);
+
+                //open linked website on click
+                Uri webPage = Uri.parse(newsItem.getUrl());
+                Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private String readAPIKey() {
@@ -89,24 +107,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     //bind custom adapter to list using results from loader
-    private void setAdapter(List<NewsItem> newsList){
+    private void setAdapter(List<NewsItem> newsList) {
         hideProgressBar();
 
-        NewsAdapter newsAdapter = new NewsAdapter(this,newsList);
+        NewsAdapter newsAdapter = new NewsAdapter(this, newsList);
         listView.setAdapter(newsAdapter);
     }
 
     @NonNull
     @Override
     public Loader<List<NewsItem>> onCreateLoader(int id, @Nullable Bundle args) {
-        return new NewsLoader(this,GUARDIAN_URL);
+        return new NewsLoader(this, GUARDIAN_URL);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<NewsItem>> loader, List<NewsItem> data) {
-        if (data!=null) setAdapter(data);
+        if (data != null) setAdapter(data);
         else {
-            TextView textView =findViewById(R.id.errorText);
+            TextView textView = findViewById(R.id.errorText);
             textView.setText(R.string.no_news);
         }
     }
