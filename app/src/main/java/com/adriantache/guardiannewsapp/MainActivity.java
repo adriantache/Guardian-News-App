@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.adriantache.guardiannewsapp.adapter.NewsAdapter;
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 import com.adriantache.guardiannewsapp.loader.NewsLoader;
 
@@ -87,9 +88,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         progressBar.setVisibility(View.GONE);
     }
 
-    //todo write code to bind custom adapter to list using results from loader
+    //bind custom adapter to list using results from loader
     private void setAdapter(List<NewsItem> newsList){
+        hideProgressBar();
 
+        NewsAdapter newsAdapter = new NewsAdapter(this,newsList);
+        listView.setAdapter(newsAdapter);
     }
 
     @NonNull
@@ -100,8 +104,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<NewsItem>> loader, List<NewsItem> data) {
-        hideProgressBar();
-
         if (data!=null) setAdapter(data);
         else {
             TextView textView =findViewById(R.id.errorText);
