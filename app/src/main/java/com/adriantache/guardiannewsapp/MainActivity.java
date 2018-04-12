@@ -2,9 +2,9 @@ package com.adriantache.guardiannewsapp;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.widget.ListView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +12,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ListView listView;
     private String GUARDIAN_URL;
 
     @Override
@@ -19,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //read Guardian API key from file so we don't just post it to GitHub
-        //if file is not present just use `test` API key.
+        //Read Guardian API key from file so we don't just post it to GitHub.
+        //If file is not present just use `test` API key.
         String GUARDIAN_API_KEY = "test";
         try {
             if (Arrays.asList(getResources().getAssets().list("")).contains("myFile")) {
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
                 "http://content.guardianapis.com/search?order-by=newest&tag=technology%2Fandroid" +
                         "&section=technology&page-size=100&api-key=" + GUARDIAN_API_KEY;
 
-
+        //find views
+        listView = findViewById(R.id.listView);
     }
 
     private String readAPIKey() {
@@ -64,5 +66,5 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-
+    
 }
