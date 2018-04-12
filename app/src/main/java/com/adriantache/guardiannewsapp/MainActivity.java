@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String GUARDIAN_URL;
     public static final String TAG = "DEBUG-TAG";
 
+    //todo add log statements to figure out where the bug is
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //If file is not present just use `test` API key.
         String GUARDIAN_API_KEY = "test";
         try {
-            if (Arrays.asList(getResources().getAssets().list("")).contains("myFile")) {
+            if (Arrays.asList(getResources().getAssets().list("")).contains("GuardianAPI.txt")) {
                 String temp = readAPIKey();
                 if (!TextUtils.isEmpty(temp)) GUARDIAN_API_KEY = temp;
             }
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             Log.e(TAG, "Cannot open API key file.", e);
         }
         //then create Guardian URL
+        //todo increase page size after fixing the bug
         GUARDIAN_URL =
                 "http://content.guardianapis.com/search?order-by=newest&tag=technology%2Fandroid" +
                         "&section=technology&page-size=10&show-fields=thumbnail&api-key=" +
