@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.adriantache.guardiannewsapp.MainActivity;
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 
 import org.json.JSONArray;
@@ -25,11 +26,13 @@ import static com.adriantache.guardiannewsapp.MainActivity.TAG;
 public class Utils {
 
     public List<NewsItem> getNews(String url) {
+        Log.i(MainActivity.TAG, "4. Start get URL");
         String JSONResponse = "";
 
         //get JSON response from website
         try {
             JSONResponse = OKHTTP(url);
+            Log.i(MainActivity.TAG, "5. Get JSON content");
         } catch (IOException e) {
             Log.e(TAG, "Cannot read JSON from OKHTTP response.", e);
         }
@@ -37,6 +40,7 @@ public class Utils {
         //parse JSON String to NewsItem objects and add them to the ArrayList
         ArrayList<NewsItem> newsArray = new ArrayList<>();
         if (!TextUtils.isEmpty(JSONResponse)) {
+            Log.i(MainActivity.TAG, "6. Parse JSON response");
             newsArray = parseJSON(JSONResponse);
         }
 
@@ -70,6 +74,7 @@ public class Utils {
                 JSONObject fields = post.getJSONObject("fields");
                 try {
                     thumbnail = getImage(fields.getString("thumbnail"));
+                    Log.i(MainActivity.TAG, "7. Get image for post");
                 } catch (IOException e) {
                     Log.e(TAG, "Cannot get thumbnail.", e);
                 }
@@ -92,6 +97,7 @@ public class Utils {
             Log.e(TAG, "Cannot parse JSON.", e);
         }
 
+        Log.i(MainActivity.TAG, "8. Finish JSON parsing");
         return arrayList;
     }
 

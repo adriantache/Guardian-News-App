@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 activeNetwork.isConnectedOrConnecting()) {
             //start Loader to fetch news and populate ListView
             getSupportLoaderManager().initLoader(0, null, this);
+            Log.i(TAG, "1. Init loader");
         } else {
             hideProgressBar();
             errorText.setText(R.string.no_internet);
@@ -135,17 +136,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         NewsAdapter newsAdapter = new NewsAdapter(this, newsList);
         listView.setAdapter(newsAdapter);
+        Log.i(MainActivity.TAG, "10. Display data");
     }
 
     @NonNull
     @Override
     public Loader<List<NewsItem>> onCreateLoader(int id, @Nullable Bundle args) {
+        Log.i(TAG, "2. Start loader");
         return new NewsLoader(this, GUARDIAN_URL);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<NewsItem>> loader, List<NewsItem> data) {
-        if (data != null) setAdapter(data);
+        if (data != null) {setAdapter(data);
+            Log.i(MainActivity.TAG, "9. Send list to ArrayAdapter for display");}
         else {
             errorText.setText(R.string.no_news);
         }

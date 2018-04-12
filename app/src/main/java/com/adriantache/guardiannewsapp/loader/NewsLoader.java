@@ -2,7 +2,9 @@ package com.adriantache.guardiannewsapp.loader;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
+import com.adriantache.guardiannewsapp.MainActivity;
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 import com.adriantache.guardiannewsapp.util.Utils;
 
@@ -19,8 +21,8 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
 
     @Override
     public List<NewsItem> loadInBackground() {
+        Log.i(MainActivity.TAG, "3. Load in background");
         Utils utils = new Utils();
-        ArrayList<NewsItem> newsList = (ArrayList<NewsItem>) utils.getNews(url);
-        return newsList;
+        return utils.getNews(url);
     }
 }
