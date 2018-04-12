@@ -13,6 +13,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ListView listView;
     private TextView errorText;
     private String GUARDIAN_URL;
+    public static final String TAG = "DEBUG-TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +51,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if (!TextUtils.isEmpty(temp)) GUARDIAN_API_KEY = temp;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Cannot open API key file.", e);
         }
         //then create Guardian URL
         GUARDIAN_URL =
                 "http://content.guardianapis.com/search?order-by=newest&tag=technology%2Fandroid" +
-                        "&section=technology&page-size=100&show-fields=thumbnail&api-key=" +
+                        "&section=technology&page-size=10&show-fields=thumbnail&api-key=" +
                         GUARDIAN_API_KEY;
 
         //find views
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         try {
             inputStream = am.open("GuardianAPI.txt");
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Cannot read API key from file.", e);
         }
 
         if (inputStream != null) {
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     sb.append((char) ch);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, "Cannot read API key InputStream.", e);
             }
 
             return sb.toString();

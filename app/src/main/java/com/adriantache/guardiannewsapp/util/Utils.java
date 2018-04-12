@@ -3,6 +3,7 @@ package com.adriantache.guardiannewsapp.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 
@@ -19,6 +20,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.adriantache.guardiannewsapp.MainActivity.TAG;
+
 public class Utils {
 
     public List<NewsItem> getNews(String url) {
@@ -28,7 +31,7 @@ public class Utils {
         try {
             JSONResponse = OKHTTP(url);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Cannot read JSON from OKHTTP response.", e);
         }
 
         //parse JSON String to NewsItem objects and add them to the ArrayList
@@ -68,7 +71,7 @@ public class Utils {
                 try {
                     thumbnail = getImage(fields.getString("thumbnail"));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "Cannot get thumbnail.", e);
                 }
 
                 //get other content
@@ -86,7 +89,7 @@ public class Utils {
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Cannot parse JSON.", e);
         }
 
         return arrayList;
