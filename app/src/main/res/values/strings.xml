@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Guardian News App</string>
     <string name="guardian_logo">Guardian logo</string>
+    <string name="thumbnail">Thumbnail</string>
 </resources>
