@@ -3,6 +3,7 @@ package com.adriantache.guardiannewsapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -24,20 +25,24 @@ import com.adriantache.guardiannewsapp.adapter.NewsAdapter;
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 import com.adriantache.guardiannewsapp.loader.NewsLoader;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
 
+    public static final String TAG = "DEBUG-TAG";
     private ListView listView;
     private TextView errorText;
     private String GUARDIAN_URL;
-    public static final String TAG = "DEBUG-TAG";
 
-    //todo add log statements to figure out where the bug is
+    //todo refactor app to move processing code out of loader
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,24 +144,69 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Log.i(MainActivity.TAG, "10. Display data");
     }
 
+    private ArrayList<NewsItem> parseJSON(String jsonResponse) {
+        ArrayList<NewsItem> arrayList = new ArrayList<>();
+
+        try {
+            JSONObject root = new JSONObject(jsonResponse);
+            JSONObject response = root.getJSONObject("response");
+            JSONArray results = response.getJSONArray("results");
+
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject post = results.getJSONObject(i);
+
+                //get thumbnail image
+//                Bitmap thumbnail = null;
+//                JSONObject fields = post.getJSONObject("fields");
+//                try {
+//                    thumbnail = getImage(fields.getString("thumbnail"));
+//                    Log.i(MainActivity.TAG, "7. Get image for post");
+//                } catch (IOException e) {
+//                    Log.e(TAG, "Cannot get thumbnail.", e);
+//                }
+
+                //get other content
+                String category = post.getString("sectionName");
+                String title = post.getString("webTitle");
+                String url = post.getString("webUrl");
+                String date = post.getString("webPublicationDate");
+//                String author = post.optString("author");
+//
+//                //use appropriate constructor if author is available (I expect it never is)
+//                if (TextUtils.isEmpty(author)) {
+//                    arrayList.add(new NewsItem(category, title, url, date, thumbnail));
+//                } else {
+//                    arrayList.add(new NewsItem(category, author, title, url, date, thumbnail));
+//                }
+
+                arrayList.add(new NewsItem(category, title, url, date));
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Cannot parse JSON.", e);
+        }
+
+        Log.i(MainActivity.TAG, "8. Finish JSON parsing");
+        return arrayList;
+    }
+
     @NonNull
     @Override
-    public Loader<List<NewsItem>> onCreateLoader(int id, @Nullable Bundle args) {
+    public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
         Log.i(TAG, "2. Start loader");
         return new NewsLoader(this, GUARDIAN_URL);
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<List<NewsItem>> loader, List<NewsItem> data) {
-        if (data != null) {setAdapter(data);
-            Log.i(MainActivity.TAG, "9. Send list to ArrayAdapter for display");}
+    public void onLoadFinished(@NonNull Loader<String> loader, String JSONResponse) {
+        if (!TextUtils.isEmpty(JSONResponse)) setAdapter(parseJSON(JSONResponse));
         else {
             errorText.setText(R.string.no_news);
         }
+        Log.i(MainActivity.TAG, "9. Send list to ArrayAdapter for display");
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<List<NewsItem>> loader) {
+    public void onLoaderReset(@NonNull Loader<String> loader) {
         setAdapter(new ArrayList<NewsItem>());
     }
 }
