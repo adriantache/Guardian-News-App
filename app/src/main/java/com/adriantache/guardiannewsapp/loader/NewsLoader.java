@@ -24,7 +24,7 @@ public class NewsLoader extends AsyncTaskLoader<String> {
 
         String JSONResponse = "";
         try {
-            utils.OKHTTP(url);
+            JSONResponse = utils.OKHTTP(url);
         } catch (IOException e) {
             Log.e(MainActivity.TAG, "Cannot fetch JSON", e);
         }
