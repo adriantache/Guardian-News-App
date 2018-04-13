@@ -23,6 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_toEndOf="@id/thumbnail"
         android:layout_toStartOf="@id/date"
         android:textAllCaps="true"
