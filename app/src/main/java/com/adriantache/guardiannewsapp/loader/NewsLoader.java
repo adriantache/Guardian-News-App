@@ -20,11 +20,10 @@ public class NewsLoader extends AsyncTaskLoader<String> {
     @Override
     public String loadInBackground() {
         Log.i(MainActivity.TAG, "3. Load in background");
-        Utils utils = new Utils();
 
         String JSONResponse = "";
         try {
-            JSONResponse = utils.OKHTTP(url);
+            JSONResponse = Utils.OKHTTP(url);
         } catch (IOException e) {
             Log.e(MainActivity.TAG, "Cannot fetch JSON", e);
         }

@@ -25,7 +25,7 @@ import static com.adriantache.guardiannewsapp.MainActivity.TAG;
 
 public class Utils {
 
-   public String OKHTTP(String url) throws IOException {
+   public static String OKHTTP(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
