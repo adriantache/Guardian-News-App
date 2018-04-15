@@ -22,8 +22,6 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
 
     @Override
     public List<NewsItem> loadInBackground() {
-        Log.i(MainActivity.TAG, "3. Load in background");
-
         ArrayList<NewsItem> newsArray = new ArrayList<>();
         try {
             newsArray = Utils.OKHTTP(url);
@@ -32,6 +30,4 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
         }
         return newsArray;
     }
-
-
 }

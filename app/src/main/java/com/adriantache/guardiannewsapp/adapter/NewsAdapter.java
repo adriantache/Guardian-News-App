@@ -10,8 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 import com.adriantache.guardiannewsapp.R;
+import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 
 import java.util.List;
 

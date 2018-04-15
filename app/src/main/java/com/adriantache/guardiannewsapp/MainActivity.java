@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private TextView errorText;
     private String GUARDIAN_URL;
 
-    //todo refactor app to move processing code out of loader
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +72,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting()) {
             //start Loader to fetch news and populate ListView
-            Log.i(TAG, "1. Init loader");
-
             getSupportLoaderManager().initLoader(0, null, this).forceLoad();
         } else {
             hideProgressBar();
@@ -128,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void hideProgressBar() {
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+        if (errorText.getText().length() != 0) errorText.setText("");
     }
 
     //bind custom adapter to list using results from loader
@@ -136,25 +133,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         NewsAdapter newsAdapter = new NewsAdapter(this, newsList);
         listView.setAdapter(newsAdapter);
-        Log.i(MainActivity.TAG, "10. Display data");
     }
-
 
     @NonNull
     @Override
     public Loader<List<NewsItem>> onCreateLoader(int id, @Nullable Bundle args) {
-        Log.i(TAG, "2. Start loader");
         return new NewsLoader(this, GUARDIAN_URL);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<NewsItem>> loader, List<NewsItem> newsArray) {
-        Log.i(MainActivity.TAG, "9a. Send list to ArrayAdapter for display");
-        if (newsArray != null && newsArray.size()!=0) setAdapter(newsArray);
+        if (newsArray != null && newsArray.size() != 0) setAdapter(newsArray);
         else {
+            hideProgressBar();
             errorText.setText(R.string.no_news);
         }
-        Log.i(MainActivity.TAG, "9b. Send list to ArrayAdapter for display");
     }
 
     @Override

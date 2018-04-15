@@ -23,7 +23,6 @@ import okhttp3.Response;
 import static com.adriantache.guardiannewsapp.MainActivity.TAG;
 
 public class Utils {
-
     public static ArrayList<NewsItem> OKHTTP(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
@@ -37,7 +36,6 @@ public class Utils {
 
     private static ArrayList<NewsItem> parseJSON(String jsonResponse) {
         ArrayList<NewsItem> arrayList = new ArrayList<>();
-        Log.i(MainActivity.TAG, "xx. Start JSON parsing");
         try {
             JSONObject root = new JSONObject(jsonResponse);
             JSONObject response = root.getJSONObject("response");
@@ -50,8 +48,9 @@ public class Utils {
                 Bitmap thumbnail = null;
                 JSONObject fields = post.getJSONObject("fields");
                 try {
+                    //todo decide if this makes sense
+                    Log.i(TAG, "Get image for post");
                     thumbnail = getImage(fields.getString("thumbnail"));
-                    Log.i(MainActivity.TAG, "7. Get image for post");
                 } catch (IOException e) {
                     Log.e(TAG, "Cannot get thumbnail.", e);
                 }
@@ -74,7 +73,6 @@ public class Utils {
             Log.e(TAG, "Cannot parse JSON.", e);
         }
 
-        Log.i(MainActivity.TAG, "8. Finish JSON parsing");
         return arrayList;
     }
 
