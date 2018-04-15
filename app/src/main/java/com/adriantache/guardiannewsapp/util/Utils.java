@@ -4,8 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
-import com.adriantache.guardiannewsapp.MainActivity;
+import com.adriantache.guardiannewsapp.R;
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 
 import org.json.JSONArray;
@@ -48,8 +49,8 @@ public class Utils {
                 Bitmap thumbnail = null;
                 JSONObject fields = post.getJSONObject("fields");
                 try {
-                    //todo decide if this makes sense
-                    Log.i(TAG, "Get image for post");
+                    //todo decide whether to keep log message here
+                    Log.i(TAG, "Get image for post "+(i+1));
                     thumbnail = getImage(fields.getString("thumbnail"));
                 } catch (IOException e) {
                     Log.e(TAG, "Cannot get thumbnail.", e);

@@ -14,6 +14,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/fetching_posts"
         tools:text="No connection." />
 
     <ListView
@@ -32,9 +33,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/errorText"
+        app:layout_constraintStart_toStartOf="@id/errorText"
+        app:layout_constraintTop_toBottomOf="@id/errorText" />
 
     <View
         android:layout_width="match_parent"
