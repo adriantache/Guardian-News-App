@@ -68,7 +68,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //test network connectivity
         ConnectivityManager cm = (ConnectivityManager)
                 getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        NetworkInfo activeNetwork = null;
+        try {
+            if (cm != null) {
+                activeNetwork = cm.getActiveNetworkInfo();
+            }
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Cannot get network info.", e);
+        }
         if (activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting()) {
             //start Loader to fetch news and populate ListView
