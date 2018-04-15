@@ -25,14 +25,6 @@ public class NewsItem {
         this.thumbnail = thumbnail;
     }
 
-    //todo remove this constructor after fixing bug
-    public NewsItem(String category, String title, String url, String date) {
-        this.category = category;
-        this.title = title;
-        this.url = url;
-        this.date = cleanUpDateString(date);
-    }
-
     private String cleanUpDateString(String date) {
         return date.replaceAll("T", "\n").replaceAll("Z", "");
     }
