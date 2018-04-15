@@ -15,7 +15,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,7 +24,7 @@ import static com.adriantache.guardiannewsapp.MainActivity.TAG;
 
 public class Utils {
 
-   public static String OKHTTP(String url) throws IOException {
+    public static ArrayList<NewsItem> OKHTTP(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -33,11 +32,53 @@ public class Utils {
                 .build();
 
         Response response = client.newCall(request).execute();
-        return response.body().string();
+        return parseJSON(response.body().string());
     }
 
-    //todo figure out if this works and if we keep it
-    private Bitmap getImage(String url) throws IOException {
+    private static ArrayList<NewsItem> parseJSON(String jsonResponse) {
+        ArrayList<NewsItem> arrayList = new ArrayList<>();
+        Log.i(MainActivity.TAG, "xx. Start JSON parsing");
+        try {
+            JSONObject root = new JSONObject(jsonResponse);
+            JSONObject response = root.getJSONObject("response");
+            JSONArray results = response.getJSONArray("results");
+
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject post = results.getJSONObject(i);
+
+                //get thumbnail image
+                Bitmap thumbnail = null;
+                JSONObject fields = post.getJSONObject("fields");
+                try {
+                    thumbnail = getImage(fields.getString("thumbnail"));
+                    Log.i(MainActivity.TAG, "7. Get image for post");
+                } catch (IOException e) {
+                    Log.e(TAG, "Cannot get thumbnail.", e);
+                }
+
+                //get other content
+                String category = post.getString("sectionName");
+                String title = post.getString("webTitle");
+                String url = post.getString("webUrl");
+                String date = post.getString("webPublicationDate");
+                String author = post.optString("author");
+
+                //use appropriate constructor if author is available (I expect it never is)
+                if (TextUtils.isEmpty(author)) {
+                    arrayList.add(new NewsItem(category, title, url, date, thumbnail));
+                } else {
+                    arrayList.add(new NewsItem(category, author, title, url, date, thumbnail));
+                }
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Cannot parse JSON.", e);
+        }
+
+        Log.i(MainActivity.TAG, "8. Finish JSON parsing");
+        return arrayList;
+    }
+
+    private static Bitmap getImage(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()

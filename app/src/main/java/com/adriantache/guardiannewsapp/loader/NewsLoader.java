@@ -5,11 +5,14 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import com.adriantache.guardiannewsapp.MainActivity;
+import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 import com.adriantache.guardiannewsapp.util.Utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class NewsLoader extends AsyncTaskLoader<String> {
+public class NewsLoader extends AsyncTaskLoader<List<NewsItem>> {
     private String url;
 
     public NewsLoader(Context context, String url) {
@@ -18,15 +21,17 @@ public class NewsLoader extends AsyncTaskLoader<String> {
     }
 
     @Override
-    public String loadInBackground() {
+    public List<NewsItem> loadInBackground() {
         Log.i(MainActivity.TAG, "3. Load in background");
 
-        String JSONResponse = "";
+        ArrayList<NewsItem> newsArray = new ArrayList<>();
         try {
-            JSONResponse = Utils.OKHTTP(url);
+            newsArray = Utils.OKHTTP(url);
         } catch (IOException e) {
-            Log.e(MainActivity.TAG, "Cannot fetch JSON", e);
+            Log.e(MainActivity.TAG, "Cannot get news array", e);
         }
-        return JSONResponse;
+        return newsArray;
     }
+
+
 }
