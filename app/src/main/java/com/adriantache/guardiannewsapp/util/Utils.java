@@ -36,7 +36,7 @@ public class Utils {
             httpURLConnection.connect();
             if (httpURLConnection.getResponseCode() == 200) {
                 inputStream = httpURLConnection.getInputStream();
-                return parseJSON(readFromStream(inputStream));
+                return parseJSON(readJSONFromStream(inputStream));
             } else
                 Log.e(MainActivity.TAG, "Incorrect HTTP response code: " +
                         httpURLConnection.getResponseCode());
@@ -59,7 +59,7 @@ public class Utils {
         return null;
     }
 
-    private static String readFromStream(InputStream inputStream) {
+    private static String readJSONFromStream(InputStream inputStream) {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
