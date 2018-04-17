@@ -7,7 +7,7 @@
     <EditTextPreference
         android:defaultValue="@string/posts_to_fetch_default"
         android:inputType="number"
-        android:key="@string/posts_to_fetch"
+        android:key="@string/posts_to_fetch_key"
         android:selectAllOnFocus="true"
         android:title="@string/number_of_posts" />
 
