@@ -123,14 +123,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //get user preferences
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        // getString retrieves a String value from the preferences. The second parameter is the default value for this preference.
         String number_of_posts = sharedPrefs.getString(
                 getString(R.string.posts_to_fetch_key), getString(R.string.posts_to_fetch_default));
+        String section = sharedPrefs.getString(getString(R.string.section_key),
+                getString(R.string.section_default));
+
+        String[] sectionSplit = section.split("/");
+        String sectionMain = sectionSplit[0];
 
         //finally create Guardian URL
-        GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&tag=technology%2Fandroid" +
-                "&section=technology&page-size=" + number_of_posts +
+        GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&tag=" + section +
+                "&section=" + sectionMain + "&page-size=" + number_of_posts +
                 "&show-fields=thumbnail&api-key=" + GUARDIAN_API_KEY;
     }
 

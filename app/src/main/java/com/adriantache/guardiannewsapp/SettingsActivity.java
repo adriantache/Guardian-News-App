@@ -22,12 +22,14 @@ public class SettingsActivity extends AppCompatActivity {
             addPreferencesFromResource(R.xml.preferences);
             Preference number_of_posts = findPreference(getString(R.string.posts_to_fetch_key));
             bindPreferenceSummaryToValue(number_of_posts);
+            Preference section = findPreference(getString(R.string.section_key));
+            bindPreferenceSummaryToValue(section);
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {
             preference.setOnPreferenceChangeListener(this);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
-            String preferenceString = preferences.getString(preference.getKey(), getString(R.string.posts_to_fetch_default));
+            String preferenceString = preferences.getString(preference.getKey(),preference.getKey().replace("key","default"));
             onPreferenceChange(preference, preferenceString);
         }
 

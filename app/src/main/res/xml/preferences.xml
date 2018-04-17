@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--todo figure out possible preferences-->
-    <!--ideas: # of posts, category, etc.-->
-
     <EditTextPreference
         android:defaultValue="@string/posts_to_fetch_default"
         android:inputType="number"
         android:key="@string/posts_to_fetch_key"
         android:selectAllOnFocus="true"
         android:title="@string/number_of_posts" />
+
+    <EditTextPreference
+        android:defaultValue="@string/section_default"
+        android:inputType="text"
+        android:key="@string/section_key"
+        android:selectAllOnFocus="true"
+        android:title="@string/section_title"
+        android:singleLine="true"
+        android:imeOptions="actionSend"
+        />
 
 </PreferenceScreen>
