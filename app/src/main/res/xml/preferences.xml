@@ -6,6 +6,8 @@
         android:inputType="number"
         android:key="@string/posts_to_fetch_key"
         android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:imeOptions="actionSend"
         android:title="@string/number_of_posts" />
 
     <EditTextPreference

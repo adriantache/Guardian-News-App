@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -33,12 +34,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>>, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "DEBUG-TAG";
     private ListView listView;
     private TextView errorText;
     private String GUARDIAN_URL;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //find views
         listView = findViewById(R.id.listView);
         errorText = findViewById(R.id.errorText);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        progressBar = findViewById(R.id.progressBar);
 
         listView.setEmptyView(errorText);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         //test network connectivity
         ConnectivityManager cm = (ConnectivityManager)
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 activeNetwork.isConnectedOrConnecting()) {
             //start Loader to fetch news and populate ListView
             getSupportLoaderManager().initLoader(0, null, this).forceLoad();
+            showProgressBar();
         } else {
             hideProgressBar();
             errorText.setText(R.string.no_internet);
@@ -138,9 +146,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void hideProgressBar() {
-        ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         if (errorText.getText().length() != 0) errorText.setText("");
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void showProgressBar() {
+        //empty list first
+        setAdapter(new ArrayList<NewsItem>());
+
+        //show progress bar
+        progressBar.setVisibility(View.VISIBLE);
+
+        //inform user we're fetching posts
+        if (errorText.getText().length() == 0)
+            errorText.setText(getString(R.string.fetching_posts));
     }
 
     //bind custom adapter to list using results from loader
@@ -191,5 +211,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRefresh() {
+        getSupportLoaderManager().restartLoader(0, null, this).forceLoad();
+        showProgressBar();
     }
 }

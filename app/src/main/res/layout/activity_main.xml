@@ -10,22 +10,28 @@
         android:id="@+id/errorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/listView"
+        android:text="@string/fetching_posts"
+        app:layout_constraintBottom_toBottomOf="@id/swipe_refresh_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/fetching_posts"
         tools:text="No connection." />
 
-    <ListView
-        android:id="@+id/listView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@id/guardian_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -40,9 +46,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guardian_logo"
-        android:background="#ffffff"/>
+        app:layout_constraintTop_toTopOf="@id/guardian_logo" />
 
     <ImageView
         android:id="@+id/guardian_logo"
