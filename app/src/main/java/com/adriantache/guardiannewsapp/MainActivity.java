@@ -27,9 +27,11 @@ import android.widget.TextView;
 import com.adriantache.guardiannewsapp.adapter.NewsAdapter;
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
 import com.adriantache.guardiannewsapp.loader.NewsLoader;
+import com.adriantache.guardiannewsapp.util.Utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private TextView errorText;
     private String GUARDIAN_URL;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ProgressBar progressBar;
+    public ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             }
         });
+
+        //weak reference to main activity to update Loader progress
+        Utils.activity = new WeakReference<>(this);
+
     }
 
     private void readAPIKey() {
@@ -157,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //show progress bar
         progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
 
         //inform user we're fetching posts
         if (errorText.getText().length() == 0)

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.adriantache.guardiannewsapp.MainActivity;
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
@@ -16,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,6 +27,9 @@ import java.util.ArrayList;
 import static com.adriantache.guardiannewsapp.MainActivity.TAG;
 
 public class Utils {
+
+    public static WeakReference<MainActivity> activity;
+
     public static ArrayList<NewsItem> getJSON(String url) {
         HttpURLConnection httpURLConnection = null;
         InputStream inputStream = null;
@@ -85,7 +90,25 @@ public class Utils {
             JSONObject response = root.getJSONObject("response");
             JSONArray results = response.getJSONArray("results");
 
-            for (int i = 0; i < results.length(); i++) {
+            final int len = results.length();
+
+            for (int i = 0; i < len; i++) {
+                //update progress
+                final int progress = i+1;
+                if (activity.get() != null) {
+                    activity.get().runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            ProgressBar temp = activity.get().progressBar;
+                            temp.setIndeterminate(false);
+                            temp.setMax(len);
+                            temp.setProgress(progress);
+                        }
+                    });
+                }
+
+
                 JSONObject post = results.getJSONObject(i);
 
                 //get thumbnail image
