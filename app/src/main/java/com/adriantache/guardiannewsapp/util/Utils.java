@@ -93,8 +93,8 @@ public class Utils {
             final int len = results.length();
 
             for (int i = 0; i < len; i++) {
-                //update progress
-                final int progress = i+1;
+                //update progress bar
+                final int progress = i + 1;
                 if (activity.get() != null) {
                     activity.get().runOnUiThread(new Runnable() {
 
@@ -108,15 +108,11 @@ public class Utils {
                     });
                 }
 
-
                 JSONObject post = results.getJSONObject(i);
 
                 //get thumbnail image
                 Bitmap thumbnail;
                 JSONObject fields = post.getJSONObject("fields");
-
-                //todo decide whether to keep log message here
-                Log.i(TAG, "Get image for post " + (i + 1));
                 thumbnail = getImage(fields.getString("thumbnail"));
 
                 //get other content
