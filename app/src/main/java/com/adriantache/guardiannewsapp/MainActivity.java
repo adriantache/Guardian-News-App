@@ -143,6 +143,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String tag = sharedPrefs.getString(getString(R.string.section_key),
                 getString(R.string.section_default));
 
+        tag = tag.toLowerCase();
+        
         String section;
         if (tag.contains("/")) {
             String[] sectionSplit = tag.split("/");
