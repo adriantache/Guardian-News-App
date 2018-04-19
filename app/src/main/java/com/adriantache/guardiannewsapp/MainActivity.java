@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 getString(R.string.section_default));
 
         tag = tag.toLowerCase();
-        
+
         String section;
         if (tag.contains("/")) {
             String[] sectionSplit = tag.split("/");
