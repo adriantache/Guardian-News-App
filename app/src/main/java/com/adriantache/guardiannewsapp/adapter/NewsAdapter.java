@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.adriantache.guardiannewsapp.R;
 import com.adriantache.guardiannewsapp.customClasses.NewsItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class NewsAdapter extends ArrayAdapter<NewsItem> {
         NewsItem newsItem = getItem(position);
 
         if (newsItem != null) {
-            if (newsItem.getThumbnail() != null)
-                holder.thumbnail.setImageBitmap(newsItem.getThumbnail());
+            if (newsItem.getThumbnailURL() != null)
+                Picasso.get().load(newsItem.getThumbnailURL()).into(holder.thumbnail);
             else
                 holder.thumbnail.setImageResource(R.drawable.powered_by_guardian);
 

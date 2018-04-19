@@ -7,30 +7,30 @@ public class NewsItem {
     private String title;
     private String url;
     private String date;
-    private Bitmap thumbnail;
+    private String thumbnailURL;
 
-    public NewsItem(String category, String title, String url, String date, Bitmap thumbnail) {
+    public NewsItem(String category, String title, String url, String date, String thumbnailURL) {
         this.category = category;
         this.title = title;
         this.url = url;
         this.date = cleanUpDateString(date);
-        this.thumbnail = thumbnail;
+        this.thumbnailURL = thumbnailURL;
     }
 
-    public NewsItem(String category, String author, String title, String url, String date, Bitmap thumbnail) {
+    public NewsItem(String category, String author, String title, String url, String date, String thumbnailURL) {
         this.category = category + " | by " + author;
         this.title = title;
         this.url = url;
         this.date = cleanUpDateString(date);
-        this.thumbnail = thumbnail;
+        this.thumbnailURL = thumbnailURL;
     }
 
     private String cleanUpDateString(String date) {
         return date.replaceAll("T", "\n").replaceAll("Z", "");
     }
 
-    public Bitmap getThumbnail() {
-        return thumbnail;
+    public String getThumbnailURL() {
+        return thumbnailURL;
     }
 
     public String getCategory() {
