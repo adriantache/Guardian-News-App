@@ -15,6 +15,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,11 +40,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<NewsItem>>, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "DEBUG-TAG";
+    public ProgressBar progressBar;
     private ListView listView;
     private TextView errorText;
     private String GUARDIAN_URL;
     private SwipeRefreshLayout swipeRefreshLayout;
-    public ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,15 +140,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String number_of_posts = sharedPrefs.getString(
                 getString(R.string.posts_to_fetch_key), getString(R.string.posts_to_fetch_default));
-        String section = sharedPrefs.getString(getString(R.string.section_key),
+        String tag = sharedPrefs.getString(getString(R.string.section_key),
                 getString(R.string.section_default));
 
-        String[] sectionSplit = section.split("/");
-        String sectionMain = sectionSplit[0];
+        String section;
+        if (tag.contains("/")) {
+            String[] sectionSplit = tag.split("/");
+            section = sectionSplit[0];
+        } else {
+            section = tag;
+            tag = "";
+        }
 
         //finally create Guardian URL
-        GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&tag=" + section +
-                "&section=" + sectionMain + "&page-size=" + number_of_posts +
+        if (TextUtils.isEmpty(tag))
+            GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&section="
+                    + section + "&page-size=" + number_of_posts + "&show-fields=thumbnail&api-key="
+                    + GUARDIAN_API_KEY;
+        else
+        GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&tag=" + tag +
+                "&section=" + section + "&page-size=" + number_of_posts +
                 "&show-fields=thumbnail&api-key=" + GUARDIAN_API_KEY;
     }
 
