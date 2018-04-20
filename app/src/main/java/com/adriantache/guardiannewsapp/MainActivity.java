@@ -159,10 +159,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&section="
                     + section + "&page-size=" + number_of_posts + "&show-fields=thumbnail&api-key="
                     + GUARDIAN_API_KEY;
+        else if (tag.equals("all"))
+            GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&tag=all" +
+                    "&page-size=" + number_of_posts + "&show-fields=thumbnail&api-key="
+                    + GUARDIAN_API_KEY;
         else
-        GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&tag=" + tag +
-                "&section=" + section + "&page-size=" + number_of_posts +
-                "&show-fields=thumbnail&api-key=" + GUARDIAN_API_KEY;
+            GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&tag=" + tag +
+                    "&section=" + section + "&page-size=" + number_of_posts +
+                    "&show-fields=thumbnail&api-key=" + GUARDIAN_API_KEY;
     }
 
     private void hideProgressBar() {
