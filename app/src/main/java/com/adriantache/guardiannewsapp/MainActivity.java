@@ -142,9 +142,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 getString(R.string.posts_to_fetch_key), getString(R.string.posts_to_fetch_default));
         String tag = sharedPrefs.getString(getString(R.string.section_key),
                 getString(R.string.section_default));
-        String show_all = sharedPrefs.getString(getString(R.string.show_all_key), getString(R.string.show_all_default));
+        boolean show_all = sharedPrefs.getBoolean(getString(R.string.show_all_key), false);
 
-        if (show_all.equals("1")) {
+        if (show_all) {
             GUARDIAN_URL = "http://content.guardianapis.com/search?order-by=newest&page-size="
                     + number_of_posts + "&show-fields=thumbnail&api-key=" + GUARDIAN_API_KEY;
             return;

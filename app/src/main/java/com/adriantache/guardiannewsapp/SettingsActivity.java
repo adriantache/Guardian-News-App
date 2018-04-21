@@ -22,10 +22,14 @@ public class SettingsActivity extends AppCompatActivity {
             addPreferencesFromResource(R.xml.preferences);
             Preference number_of_posts = findPreference(getString(R.string.posts_to_fetch_key));
             bindPreferenceSummaryToValue(number_of_posts);
-            Preference show_all = findPreference(getString(R.string.show_all_key));
-            bindPreferenceSummaryToValue(show_all);
             Preference section = findPreference(getString(R.string.section_key));
             bindPreferenceSummaryToValue(section);
+
+            //todo repair this
+            Preference show_all = findPreference(getString(R.string.show_all_key));
+            //bindPreferenceSummaryToValue(show_all);
+            show_all.setOnPreferenceChangeListener(this);
+            onPreferenceChange(show_all,false);
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {

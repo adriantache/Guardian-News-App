@@ -3,27 +3,25 @@
 
     <EditTextPreference
         android:defaultValue="@string/posts_to_fetch_default"
+        android:imeOptions="actionSend"
         android:inputType="number"
         android:key="@string/posts_to_fetch_key"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:imeOptions="actionSend"
         android:title="@string/number_of_posts" />
 
     <SwitchPreference
-        android:defaultValue="@string/show_all_default"
         android:key="@string/show_all_key"
-        android:title="@string/show_all"
-        />
+        android:summary="Show posts from all categories"
+        android:title="@string/show_all" />
 
     <EditTextPreference
-        android:defaultValue="@string/section_default"
+        android:defaultValue="@bool/show_all_default"
+        android:imeOptions="actionSend"
         android:inputType="text"
         android:key="@string/section_key"
         android:selectAllOnFocus="true"
-        android:title="@string/section_title"
         android:singleLine="true"
-        android:imeOptions="actionSend"
-        />
+        android:title="@string/section_title" />
 
 </PreferenceScreen>
