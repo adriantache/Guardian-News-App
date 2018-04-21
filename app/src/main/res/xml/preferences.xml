@@ -12,7 +12,8 @@
 
     <SwitchPreference
         android:key="@string/show_all_key"
-        android:summary="Show posts from all categories"
+        android:summaryOn="@string/show_all_on"
+        android:summaryOff="@string/show_all_off"
         android:title="@string/show_all" />
 
     <EditTextPreference
@@ -23,5 +24,4 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/section_title" />
-
 </PreferenceScreen>

@@ -14,4 +14,6 @@
     <string name="section_default">technology/android</string>
     <string name="show_all_key">show_all</string>
     <string name="show_all">Show all posts</string>
+    <string name="show_all_on">Showing posts from all categories</string>
+    <string name="show_all_off">Showing only posts from section below</string>
 </resources>

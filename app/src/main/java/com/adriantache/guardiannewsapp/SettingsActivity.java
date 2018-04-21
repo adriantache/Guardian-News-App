@@ -24,21 +24,14 @@ public class SettingsActivity extends AppCompatActivity {
             bindPreferenceSummaryToValue(number_of_posts);
             Preference section = findPreference(getString(R.string.section_key));
             bindPreferenceSummaryToValue(section);
-
-            //todo repair this
-            Preference show_all = findPreference(getString(R.string.show_all_key));
-            //bindPreferenceSummaryToValue(show_all);
-            show_all.setOnPreferenceChangeListener(this);
-            onPreferenceChange(show_all,false);
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {
             preference.setOnPreferenceChangeListener(this);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
-            String preferenceString = preferences.getString(preference.getKey(),preference.getKey().replace("key","default"));
+            String preferenceString = preferences.getString(preference.getKey(), preference.getKey().replace("key", "default"));
             onPreferenceChange(preference, preferenceString);
         }
-
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
