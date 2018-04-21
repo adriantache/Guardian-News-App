@@ -84,8 +84,8 @@ public class Utils {
         ArrayList<NewsItem> arrayList = new ArrayList<>();
         try {
             JSONObject root = new JSONObject(jsonResponse);
-            JSONObject response = root.getJSONObject("response");
-            JSONArray results = response.getJSONArray("results");
+            JSONObject response = root.optJSONObject("response");
+            JSONArray results = response.optJSONArray("results");
 
             final int len = results.length();
 
@@ -105,18 +105,18 @@ public class Utils {
                     });
                 }
 
-                JSONObject post = results.getJSONObject(i);
+                JSONObject post = results.optJSONObject(i);
 
                 //get news post content
-                String category = post.getString("sectionName");
-                String title = post.getString("webTitle");
-                String url = post.getString("webUrl");
-                String date = post.getString("webPublicationDate");
+                String category = post.optString("sectionName");
+                String title = post.optString("webTitle");
+                String url = post.optString("webUrl");
+                String date = post.optString("webPublicationDate");
                 String author = post.optString("author");
 
                 //get thumbnail image
-                JSONObject fields = post.getJSONObject("fields");
-                String thumbnail = fields.getString("thumbnail");
+                JSONObject fields = post.optJSONObject("fields");
+                String thumbnail = fields.optString("thumbnail");
 
                 //use appropriate constructor if author is available (I expect it never is)
                 if (TextUtils.isEmpty(author)) {

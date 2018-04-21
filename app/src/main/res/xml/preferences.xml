@@ -10,6 +10,12 @@
         android:imeOptions="actionSend"
         android:title="@string/number_of_posts" />
 
+    <SwitchPreference
+        android:defaultValue="@string/show_all_default"
+        android:key="@string/show_all_key"
+        android:title="@string/show_all"
+        />
+
     <EditTextPreference
         android:defaultValue="@string/section_default"
         android:inputType="text"

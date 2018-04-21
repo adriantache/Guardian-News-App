@@ -12,4 +12,7 @@
     <string name="section_key">section</string>
     <string name="section_title">Section to display</string>
     <string name="section_default">technology/android</string>
+    <string name="show_all_default">0</string>
+    <string name="show_all_key">show_all</string>
+    <string name="show_all">Show all posts</string>
 </resources>
