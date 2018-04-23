@@ -13,6 +13,7 @@
         android:layout_marginTop="8dp"
         android:contentDescription="@string/thumbnail"
         android:gravity="center_vertical"
+        android:minHeight="100dp"
         android:scaleType="centerCrop" />
 
     <TextView
